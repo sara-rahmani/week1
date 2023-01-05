@@ -16,13 +16,13 @@ app.use(express.static("build1"))
 
 
 
-const dataPath = path.join(__dirname, "../week1/data/");
+const dataPath = path.join('data', 'quotes.json');
 app.get("/", (req, res) => {
   console.log("GET /")
   res.send("<h1>Hello aws</h1>")
 })
 app.get("/api/pokemons", (req, res) => {
-  fs.readFile(dataPath + "quotes.json")
+  fs.readFile(dataPath)
   .then((contents) => {
     console.log(contents);
     // need to parse the raw buffer as json if we want to work with it
