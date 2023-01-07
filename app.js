@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Before the other routes
-app.use(express.static("build1"))
+app.use(express.static("build2"))
 
 
 
@@ -39,17 +39,34 @@ app.get("/api/pokemons", (req, res) => {
 });
 
 
-// app.post("/api/pokemons", (req, res) => {
-//   const data = req.body
-//   console.log("POST /api/pokemons", data)
-//   data.id = pokemons.length+1
-//   pokemons.push(data)
-//   res.send(data)
-// })
+app.post("/api/pokemons", (req, res) => {
+  const data = req.body
+  console.log("POST /api/pokemons", data)
+  // Storing the JSON format data in myObject
+  fs.readFile(dataPath)
+  .then((contents) => {
+var myObject = JSON.parse(contents);
+myObject.push(data);
+
+  var newData = JSON.stringify(myObject);
+
+  fs.writeFile(dataPath, newData, err => {
+    // error checking
+    if(err) throw err;
+    
+    console.log("New data added");
+    res.render("/api/pokemons", {
+      status: "received",
+    });  })
+
+
+});   
+  // res.send(data)
+});
 
 // After all other routes
 app.get('*', (req, res) => {
-  res.sendFile('build1/index.html');
+  res.sendFile('build2/index.html');
 });
 const port = process.env.PORT || 8081
 app.listen(port, () => console.log(`listening on port ${port}`))
