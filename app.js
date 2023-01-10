@@ -61,7 +61,7 @@ myObject.push(data);
 
 
 });   
-  // res.send(data)
+   res.send(data)
 });
 
 // After all other routes
